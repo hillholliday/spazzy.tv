@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "twitchRandom",
+    "style": "scss",
+    "postcss": false
+  }
+}
