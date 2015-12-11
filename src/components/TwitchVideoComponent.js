@@ -7,35 +7,43 @@ require('styles//TwitchVideo.scss');
 class TwitchVideoComponent extends React.Component {
   constructor(props){
   	super(props);
-  	this.state = { 
+  	this.state = {
+  		streamList: props.initialStreamList,
   		stream: props.initialStream,
   		count: props.streamCount
   	}
   }
-  loadVideo(){
+  loadStreams(){
   	var clientId = 'idwl8g4zkgceb1yrcagtunmz0guz20j';
   	var that = this;
   	var streamList = null;
-
+  	
   	Twitch.init({clientId: clientId}, function(error, status) {
 		console.log('Twitch enabled');
 
 		Twitch.api({method: 'beta/streams/random?limit=10&language=en', verb: 'GET'},function(error,list){
 			streamList = list; 
-			var src = list.streams[that.state.count].channel.name;
+			
 			that.setState({
-							stream: "http://twitch.tv/"+src+"/embed",
+							streamList: streamList,
+							stream: "http://twitch.tv/"+streamList.streams[0].channel.name+"/embed",
 							count: that.state.count + 1
 						});
 		});
 	});
 	return;
   }
+  loadVideo(){
+  	this.setState({
+		stream: "http://twitch.tv/"+this.state.streamList.streams[this.state.count].channel.name+"/embed",
+		count: this.state.count + 1
+	});
+  }
   componentWillMount(){
-  	this.loadVideo();
+  	this.loadStreams();
   }
   componentWillReceiveProps(){
-  	this.loadVideo();
+  	this.loadStreams();
   }
   render() {
     return (
@@ -54,11 +62,13 @@ TwitchVideoComponent.displayName = 'TwitchVideoComponent';
 
 // Uncomment properties you need
 TwitchVideoComponent.propTypes = { 
+									streamList: React.PropTypes.object,
 									initialStream: React.PropTypes.string,
 									streamCount: React.PropTypes.number
 								};
 
 TwitchVideoComponent.defaultProps = { 
+									streamList: null,
 									initialStream: null,
 									streamCount: 0 
 								};
