@@ -1,5 +1,14 @@
 @import "base";
 
+@include keyframes(spin){
+	0%{
+		@include transform(rotate(0deg));
+	}
+	100%{
+		@include transform(rotate(360deg));
+	}
+}
+
 .twitchvideo-component {
 	a{
 		color:$primary;
@@ -47,6 +56,16 @@
 		}
 		button{
 			float:right;
+			@extend %button;
+			@extend %light-button;
+			@extend %has-icon;
+			position:relative;
+			top:3px;
+			&:hover{
+				span:first-of-type{
+					@include animation(spin 1s infinite linear);
+				}
+			}
 		}
 	}
   	.video-holder{
@@ -55,7 +74,7 @@
 		background-position:center;
 		background-repeat:no-repeat;
 		background-color:#000;
-		min-height:75vh;
+		min-height:70vh;
 		position:relative;
 		iframe{
 			@include position(absolute, 0px 0px 0px 0px);
@@ -73,6 +92,18 @@
 	}
 	.chat{
 		display:none;
+		button{
+			@extend %button;
+			@extend %dark-button;
+			@extend %has-icon;
+			width:190px;
+			background-size:100%;
+			@extend %default-transition;
+			&:hover{	
+				background-size:200%;
+				background-position:bottom;
+			}
+		}
 	}
 }
 
@@ -86,14 +117,33 @@
 			position:relative;
 			@include span-columns(3);
 			overflow-y:hidden;
+			button{
+				@include appearance(none);
+				@include position(absolute, 23px auto auto 50%);
+				@include transform(translateX(-50%));
+			}
 			iframe{
 				width:100%;
 				height:calc(100vh - 40px);
+				position:relative;
+				top:110px;
 			}
 		}
 		.video,
 		.chat iframe{
 			max-height:800px;
+		}
+	}
+
+	//LOGGEDIN
+	.twitchvideo-component.authenticated{
+		.chat{
+			button{
+				display:none;
+			}
+			iframe{
+				top:0px;
+			}
 		}
 	}
 }

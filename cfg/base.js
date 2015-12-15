@@ -1,4 +1,5 @@
 var path = require('path');
+var classNames = require('classnames');
 
 var port = 8000;
 var srcPath = path.join(__dirname, '/../src');

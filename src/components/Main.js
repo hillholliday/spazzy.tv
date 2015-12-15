@@ -2,6 +2,7 @@ require('styles/App.scss');
 
 require("!script!../scripts/jquery-2.1.4.js");
 require("!script!../scripts/twitch.js");
+require("!script!../scripts/modernizr.js");
 
 import React from 'react';
 import TwitchVideo from './TwitchVideoComponent';
