@@ -1,4 +1,3 @@
-require('normalize.css');
 require('styles/App.scss');
 
 require("!script!../scripts/jquery-2.1.4.js");

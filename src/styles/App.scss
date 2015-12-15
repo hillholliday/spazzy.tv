@@ -1,25 +1,15 @@
-@import "compass/reset";
-@import "compass/css3";
-@import "bourbon/bourbon";
-@import "neat/neat";
-
-@import "partials/base";
+@import "base";
 
 /* Base Application Styles */
 body {
-  color: #fff;
+  position:relative;
   @include linear-gradient(60deg, darken(#6441A5, 20%), #6441A5);
-}
-
-button{
-  color:#000;
-}
-
-.index img {
-  margin: 40px auto;
-  border-radius: 4px;
-  background: #fff;
-  display: block;
+  background-attachment: fixed;
+  & > div{
+    @include position(absolute, 0px 0px 0px 0px);
+    padding:10px;
+    margin:10px;
+  }
 }
 
 .index .notice {

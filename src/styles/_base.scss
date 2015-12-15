@@ -1,3 +1,8 @@
+@import "compass/reset";
+@import "compass/css3";
+@import "bourbon/bourbon";
+@import "neat/neat";
+
 /*//////////////////////////////////////
 //  colors
 //////////////////////////////////////*/
@@ -7,9 +12,11 @@ $twitter:#469aea;
 $instagram: #1b3f67;
 $linkedin: #3574af;
 
+$light:#EFEFEF;
 $white: #fff;
+$dark: #333;
 
-$primary: #4270B7;
+$primary: #6441A5;
 $secondary: #77787B;
 
 /*//////////////////////////////////////
@@ -19,14 +26,14 @@ $font-sans: helvetica;
 $font-serif: georgia;
 
 $condensed: "din-condensed-web",'arial condensed',impact, sans-serif;
-$regular: "DIN1451W01-Mittelschrif", $helvetica;
+$regular: "DIN1451W01-Mittelschrif", $font-sans;
 
 /*//////////////////////////////////////
 //  extension on skeleton
 //////////////////////////////////////*/
 $grid-columns: 12;
-$width:850px;
-$max-width:850px;
+$width:1200px;
+$max-width:1200px;
 $font-size:10;
 $paragraph-size:1.6;
 
@@ -146,6 +153,7 @@ body{
     font-size:62.5%;
     position:relative;
     font-family:$regular;
+    color:$dark;
 }
 
 .wf-loading,
@@ -162,27 +170,6 @@ body{
     main{
         h1,h2,h3,h4,h5,h6,p,li,span{
             @include opacity(1);
-        }
-    }
-}
-
-section.story{
-    position:relative;
-    z-index:3;
-    padding:40px 0px;
-    overflow-y:hidden;
-}
-
-@media all and(min-width:700px){
-    section{
-        min-height:100vh;
-    }
-    section.story{
-        padding:115px 0px;
-    }
-    .no-cssvhunit{
-        section{
-            min-height:700px;
         }
     }
 }
