@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import FormattedNumber from './FormattedNumberComponent';
 
 require('styles//TwitchVideo.scss');
 
@@ -13,7 +14,9 @@ class TwitchVideoComponent extends React.Component {
   	this.state = {
   		streamList: props.initialStreamList,
   		count: props.streamCount,
-  		loggedIn: false
+  		loggedIn: false,
+  		currentUser: null,
+  		accessToken: null
   	}
   }
   loadStreams(){
@@ -30,7 +33,13 @@ class TwitchVideoComponent extends React.Component {
 
 		if(status.authenticated){
 			that.setState({
-				loggedIn: true
+				loggedIn: true,
+				accessToken: status.token
+			});
+			Twitch.api({method: 'user', verb: 'GET'}, function(error,user){
+				that.setState({
+					currentUser: user.name
+				});
 			});
 		}
 	});
@@ -38,18 +47,39 @@ class TwitchVideoComponent extends React.Component {
   }
   signIn(){
   	Twitch.login({
-      scope: ['user_read', 'channel_read']
+      scope: ['user_read', 'channel_read','user_follows_edit']
     });
   }
-  likeChannel(user,target){
+  likeChannel(){
+  	var user = this.state.currentUser;
+  	var target = this.state.streamList.streams[this.state.count].channel.name; 
+  	var token = this.state.accessToken;
+  	console.log('users/'+user+'/follows/channels/'+target+'?access_token='+token);
   	Twitch.api({method:'users/'+user+'/follows/channels/'+target, verb: 'PUT'}, function(error, status){
-
+  		if(error === null){
+  			$('button.follow').hide();
+  			$('button.unfollow').show();
+  		}
+  	});
+  }
+  dislikeChannel(){
+  	var user = this.state.currentUser;
+  	var target = this.state.streamList.streams[this.state.count].channel.name; 
+  	var token = this.state.accessToken;
+  	console.log('users/'+user+'/follows/channels/'+target+'?access_token='+token);
+  	Twitch.api({method:'users/'+user+'/follows/channels/'+target, verb: 'DELETE'}, function(error, status){
+  		if(error === null){
+  			$('button.follow').show();
+  			$('button.unfollow').hide();
+  		}
   	});
   }
   loadVideo(){
   	this.setState({
 		count: this.state.count + 1
 	});
+	$('button.follow').show();
+	$('button.unfollow').hide();
   }
   componentWillMount(){
   	this.loadStreams();
@@ -64,24 +94,27 @@ class TwitchVideoComponent extends React.Component {
 			<p>Loading</p>
 		)
 	}
+	// load the app into place
 	else{
 		var current = this.state.streamList.streams[this.state.count];
 		var playing = "";
+	    
+	    if(current.game !== null){
+	    	playing = "playing "+current.game;
+	    }
 
-		var stream = "http://twitch.tv/"+current.channel.name+"/embed";
-		//var chat = "http://www.twitch.tv/"+current.channel.name+"/chat";
+	    var stream = "http://twitch.tv/"+current.channel.name+"/embed";
 		var chat = "http://twitch.tv/chat/embed?channel="+current.channel.name;
 		var status = current.channel.status
 		var logo = current.channel.logo;
+
+		var views = (current.channel.views);
+		var followers = (current.channel.followers);
 
 		var mainClass = classNames({
 			'twitchvideo-component':true,
 			'authenticated': this.state.loggedIn
 		});
-	    
-	    if(current.game !== null){
-	    	playing = "playing "+current.game;
-	    }
 
 	    return (
 	      <div className={mainClass}>
@@ -103,12 +136,25 @@ class TwitchVideoComponent extends React.Component {
 					</section>
 					<section className="video-details">
 						<ul className="actions">
-							<li>Follow</li>
-							<li>Share</li>
+							<li>
+								<button className="follow" onClick={this.likeChannel.bind(this)}>
+									<span dangerouslySetInnerHTML={ {__html: '<svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg>'} }></span> Follow
+								</button>
+								<button className="unfollow" onClick={this.dislikeChannel.bind(this)}>
+									<span dangerouslySetInnerHTML={ {__html: '<svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg>'} }></span>
+								</button>
+							</li>
+							<li>
+								<label>Share</label>
+								<ul className="drop-down">
+									<li>Facebook</li>
+									<li>Twitter</li>
+								</ul>
+							</li>
 						</ul>
 						<ul className="stats">
-							<li>Total Views: {current.channel.views}</li>
-							<li>Followers: {current.channel.followers}</li>
+							<li><span dangerouslySetInnerHTML={ {__html: '<svg class="icon icon-eye"><use xlink:href="#icon-eye"></use></svg>'} }></span><FormattedNumber number={views}/></li>
+							<li><span dangerouslySetInnerHTML={ {__html: '<svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg>'} }></span><FormattedNumber number={followers}/></li>
 						</ul>
 					</section>
 				</div>

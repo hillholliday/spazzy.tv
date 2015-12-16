@@ -74,7 +74,7 @@
 		background-position:center;
 		background-repeat:no-repeat;
 		background-color:#000;
-		min-height:70vh;
+		min-height:calc(100% - 110px);
 		position:relative;
 		iframe{
 			@include position(absolute, 0px 0px 0px 0px);
@@ -143,6 +143,112 @@
 			}
 			iframe{
 				top:0px;
+			}
+		}
+	}
+}
+
+.video-details{
+	margin:20px 0;
+	@include clearfix();
+	.follow,
+	.unfollow{
+		@extend %button;
+		text-shadow:none;
+		box-shadow:none;
+		border:none;
+		svg{
+			@include size(13px);
+		}
+		svg use{
+			fill:#fff;
+		}
+	}
+	.follow{
+		@extend %has-icon;
+		color:#fff;
+		background-color:$primary;
+		font-size:12px;
+	}
+	.unfollow{
+		background-color:#00AE20;
+		display:none;
+		@include size(30px);
+		svg{
+			@extend %absolute-middle;
+		}
+	}
+	.actions > li,
+	.stats > li{
+		display:inline-block;
+	}
+
+	.drop-down{
+		display:none;
+	}
+	.actions{
+		float:left;
+	}
+	.stats{
+		float:right;
+	}
+	.actions{
+		label{
+			margin:0 20px;
+			color:$primary;
+			font-size:13px;
+			position:relative;
+			display:inline-block;
+			cursor:pointer;
+			&:after{
+				@extend %psuedo-content;
+				@include triangle(10px, lighten($dark,50%), down);
+				@include position(absolute, 63% -15px auto auto);
+				@include transform(translateY(-50%));
+			}
+		}
+	}
+	.stats{
+		font-size:15px;
+		li{
+			margin-left:10px;
+		}
+		svg{
+			margin:0 5px;
+			@include size(14px);
+			use{
+				fill:lighten($dark,50%);
+			}
+		}
+	}
+}
+
+.no-touch .video-details{
+	.follow,
+	.unfollow{
+		@extend %default-transition;
+	}
+	.follow:hover{
+		background-color:lighten($primary,10%);
+	}
+	.unfollow{
+		position:relative;
+		&:before{
+			content:" ";
+			display:block;
+			height:2px;
+			width:50%;
+			background-color:#fff;
+			border:1px solid #d44949;
+			@extend %default-transition;
+			@extend %absolute-middle;
+			z-index:2;
+			@include opacity(0);
+		}
+		&:hover{
+			background-color:#d44949;
+			&:before{
+				@include opacity(1);
 			}
 		}
 	}
