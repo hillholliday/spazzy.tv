@@ -5,8 +5,20 @@ import FormattedNumber from './FormattedNumberComponent';
 
 require('styles//TwitchVideo.scss');
 
-var clientId = 't4ud6iil9usuoaf9ytm9kfpzgmo2fje';
+var clientId;
 var classNames = require('classnames');
+
+var config = require('config');
+
+if(config.default.appEnv == "dev"){
+	clientId = 't4ud6iil9usuoaf9ytm9kfpzgmo2fje'; 
+}
+else if(config.default.appEnv == "staging"){
+	clientId = 'qr2qjns8zpj7foayffst9z0wspnbymm';
+}
+else if(config.default.appEnv == "dist"){
+	clientId = 'qr2qjns8zpj7foayffst9z0wspnbymm';
+}
 
 class TwitchVideoComponent extends React.Component {
   constructor(props){
@@ -81,6 +93,23 @@ class TwitchVideoComponent extends React.Component {
 	$('button.follow').show();
 	$('button.unfollow').hide();
   }
+  openShare(){
+  	$('li.share-box').toggleClass('open');
+  }
+  openShareBox(url, height, width){
+  	newwindow=window.open(url,'name','height='+height+',width='+width);
+    if (window.focus) {newwindow.focus();}
+    return false;
+  }
+  openFacebook(){
+  	var channelName = this.state.streamList.streams[this.state.count].channel.name
+  	this.openShareBox('https://www.facebook.com/sharer/sharer.php?u=http://twitch.tv/'+channelName,400,600);
+  }
+  openTwitter(){
+  	var channelName = this.state.streamList.streams[this.state.count].channel.name
+  	var url = 'https://twitter.com/intent/tweet?status=I found '+channelName+'(http://twitch.com/'+channelName+') on Roulette.tv! Find more streamers here: http://roulette.tv';
+  	this.openShareBox(url,400,600);
+  }
   componentWillMount(){
   	this.loadStreams();
   }
@@ -144,11 +173,21 @@ class TwitchVideoComponent extends React.Component {
 									<span dangerouslySetInnerHTML={ {__html: '<svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg>'} }></span>
 								</button>
 							</li>
-							<li>
-								<label>Share</label>
+							<li className="share-box">
+								<button className="share" onClick={this.openShare.bind(this)}>Share</button>
 								<ul className="drop-down">
-									<li>Facebook</li>
-									<li>Twitter</li>
+									<li>
+										<button className="facebook" onClick={this.openFacebook.bind(this)}>
+											<span dangerouslySetInnerHTML={ {__html: '<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>'} }></span>
+											facebook
+										</button>
+									</li>
+									<li>
+										<button className="twitter" onClick={this.openTwitter.bind(this)}>
+											<span dangerouslySetInnerHTML={ {__html: '<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>'} }></span>
+											twitter
+										</button>
+									</li>
 								</ul>
 							</li>
 						</ul>
