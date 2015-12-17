@@ -34,7 +34,7 @@ class TwitchVideoComponent extends React.Component {
   loadStreams(){
   	var that = this;
   	
-  	console.log("environment: " + config.default.appEnv);
+  	console.log("environment: " + config.default.appEnv + " | client ID: " + clientId);
 
   	Twitch.init({clientId: clientId}, function(error, status) {
 		Twitch.api({method: 'beta/streams/random?limit=10&language=en', verb: 'GET'},function(error,list){
