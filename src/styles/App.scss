@@ -7,8 +7,6 @@ body {
   background-attachment: fixed;
   & > div{
     @include position(absolute, 0px 0px 0px 0px);
-    padding:10px;
-    margin:10px;
   }
 }
 

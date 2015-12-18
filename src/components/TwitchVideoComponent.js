@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import NavHeader from './NavHeaderComponent';
 import FormattedNumber from './FormattedNumberComponent';
 
 require('styles//TwitchVideo.scss');
@@ -149,6 +150,7 @@ class TwitchVideoComponent extends React.Component {
 
 	    return (
 	      <div className={mainClass}>
+	      		<NavHeader/>
 				<div className="video">
 					<header className="stream-details">
 						<div className="header-group">

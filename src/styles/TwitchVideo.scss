@@ -110,6 +110,11 @@
 @media all and(min-width:800px){
 	.twitchvideo-component{
 		@include outer-container();
+		.video,
+		.chat{
+			position:relative;
+			top:60px;
+		}
 		.video{
 			@include span-columns(9);
 		}
@@ -131,7 +136,7 @@
 		}
 		.video,
 		.chat iframe{
-			max-height:800px;
+			max-height:550px;
 		}
 	}
 
