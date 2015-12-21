@@ -9,9 +9,27 @@ class NavHeaderComponent extends React.Component {
     return (
       <header className="navheader-component">
         <div className="block">
-        	<a href="/">
-        		<span dangerouslySetInnertHTML={{ __html: '<svg class="icon icon-spazzy"><use xlink:href="#icon-spazzy"></use></svg>' }}></span>
-        	</a>
+        	<div className="logo">
+	        	<a href="/">
+	        		<span dangerouslySetInnerHTML={{ __html: '<svg class="icon icon-spazzy"><use xlink:href="#icon-spazzy"></use></svg>' }}></span>
+	        	</a>
+	        	<p>finding new streamers through rng</p>
+	        </div>
+	        <nav className="stream-nav">
+	        	<ul>
+	        		<li>
+	        			<button className="nav-button">
+	        				About
+	        			</button>
+	        		</li>
+	        		<li>
+	        			<button title="feature coming soon" className="nav-button disabled">
+	        				Select Games
+	        				<span className="tooltip below">Feature coming soon</span>
+	        			</button>
+	        		</li>
+	        	</ul>
+	        </nav>
         </div>
       </header>
     );

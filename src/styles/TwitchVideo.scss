@@ -113,7 +113,7 @@
 		.video,
 		.chat{
 			position:relative;
-			top:60px;
+			top:85px;
 		}
 		.video{
 			@include span-columns(9);
@@ -136,7 +136,7 @@
 		}
 		.video,
 		.chat iframe{
-			max-height:550px;
+			height:calc(100vh - 145px);
 		}
 	}
 

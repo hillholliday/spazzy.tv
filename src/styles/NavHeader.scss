@@ -1,7 +1,174 @@
 @import "base";
 
+@include keyframes(flicker){
+	0%{
+		@include opacity(1);
+	}
+	50%{
+		@include opacity(0);
+	}
+	100%{
+		@include opacity(1);
+	}
+}
+
+div.loading-screen{
+	@extend %absolute-middle;
+	svg{
+		@include size(140px 40px);
+		use{
+			fill:#fff;
+		}
+	}
+	p{
+		font-family:$georgia;
+		font-size:16px;
+		display:block;
+		color:#fff;
+		font-style: italic;
+		text-align:center;
+		padding:10px;
+	}
+	div,
+	div:before,
+	div:after{
+		display:block;
+		@include size(5px);
+		@include border-radius(50%);
+		background-color:#fff;
+		position:absolute;
+		bottom:-10px;
+	}
+	div:before,
+	div:after{
+		@extend %psuedo-content;
+	}
+	div:before{
+		left:-20px;
+	}
+	div:after{
+		left:20px;
+	}
+
+	div:before{
+		@include animation(flicker 1s 0s infinite);
+	}
+	div{
+		@include animation(flicker 1s 1s infinite);
+	}
+	div:after{
+		@include animation(flicker 1s 2s infinite);
+	}
+}
+
 .navheader-component {
 	background-color:$light;
 	@include position(absolute, 0px 0px auto 0px);
-	height:40px;
+	height:60px;
+	.block{
+		position:relative;
+		height:100%;
+	}
+	svg use{
+		fill:$primary;
+	}
+	svg{
+		@include size(100px 30px); 
+	}
+	div.logo{
+		@include position(absolute, 50% auto auto 0px);
+		@include transform(translateY(-50%));
+		p{
+			font-size:12px;
+			@include position(absolute, 50% auto auto 115px);
+			@include transform(translateY(-50%));
+			color:lighten($dark, 35%);
+			font-family:$georgia;
+			font-size:14px;
+			font-style:italic;
+			width:300px;
+			line-height:0;
+		}
+	}
+	nav.stream-nav{
+		@include position(absolute, 0px 0px 0px auto);
+		ul, li, button{
+			height:100%;
+		}
+		li{
+			display:inline-block;
+			height:100%;
+		}
+
+		li:first-child button{
+			border-left:1px solid lighten($dark,60%);
+			border-right:1px solid lighten($dark,60%);
+		}
+		li:last-child button{
+			border-right:1px solid lighten($dark,60%);
+			position:relative;
+			&:after{
+				@extend %psuedo-content;
+				@include triangle(10px, rgba(lighten($dark,50%),0.5), down);
+				@include position(absolute, 50% 14px auto auto);
+				@include transform(translateY(-50%));
+			}
+		}
+	}
+}
+
+.nav-button{
+	display:block;
+	font-size:14px;
+	background-color:transparent;
+	border:none;
+	height:100%;
+	text-transform: uppercase;
+	@include appearance(none);
+	padding:0 30px;
+	color:lighten($dark,20%);
+	background-size:100%;
+	@include linear-gradient($light,darken($light,5%));
+}
+
+.nav-button.disabled{
+	cursor:not-allowed;
+	color:rgba(lighten($dark,20%),0.5);
+}
+
+.no-touch .nav-button:not(.disabled){
+	@extend %default-transition;
+	&:hover{
+		color:$dark;
+		background-size:200%;
+	}
+}
+
+span.tooltip{
+	@include position(absolute, auto auto -25px 50%);
+	@include transform(translateX(-50%));
+	@include opacity(0);
+	background-color:$dark;
+	color:$light;
+	padding:5px;
+	width:100%;
+	font-size:12px;
+	pointer-events:none;
+	@extend %default-transition;
+	&.below{
+		bottom:-30px;
+		&:before{
+			@extend %psuedo-content;
+			@include triangle(10px, $dark, up);
+			@include position(absolute, -5px auto auto 50%);
+			@include transform(translateY(-50%));
+		}
+	}
+}
+
+button:hover span.tooltip{
+	@include opacity(1);
+	&.below{
+		bottom:-25px;
+	}
 }
