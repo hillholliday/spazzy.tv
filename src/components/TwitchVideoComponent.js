@@ -123,10 +123,13 @@ class TwitchVideoComponent extends React.Component {
   	// load the data initially
 	if (!this.state.streamList) {
 		return(
-			<div className="loading-screen">
-				<span dangerouslySetInnerHTML={{ __html: '<svg class="icon icon-spazzy"><use xlink:href="#icon-spazzy"></use></svg>' }}></span>
+			<div className="loading-screen">				
+				<div className="pacman">
+				   <div className="body"></div>
+				   <div className="mouth"></div>
+				   <div className="dot"></div>
+				</div>
 				<p>Now loading</p>
-				<div></div>
 			</div>
 		)
 	}

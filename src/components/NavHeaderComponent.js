@@ -5,6 +5,9 @@ import React from 'react';
 require('styles//NavHeader.scss');
 
 class NavHeaderComponent extends React.Component {
+  openAboutModal(){
+  	alert('working');
+  }
   render() {
     return (
       <header className="navheader-component">
@@ -18,7 +21,7 @@ class NavHeaderComponent extends React.Component {
 	        <nav className="stream-nav">
 	        	<ul>
 	        		<li>
-	        			<button className="nav-button">
+	        			<button onClick={this.openAboutModal.bind(this)} className="nav-button">
 	        				About
 	        			</button>
 	        		</li>

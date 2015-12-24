@@ -1,17 +1,5 @@
 @import "base";
 
-@include keyframes(flicker){
-	0%{
-		@include opacity(1);
-	}
-	50%{
-		@include opacity(0);
-	}
-	100%{
-		@include opacity(1);
-	}
-}
-
 div.loading-screen{
 	@extend %absolute-middle;
 	svg{
@@ -29,35 +17,76 @@ div.loading-screen{
 		text-align:center;
 		padding:10px;
 	}
-	div,
-	div:before,
-	div:after{
-		display:block;
-		@include size(5px);
-		@include border-radius(50%);
-		background-color:#fff;
-		position:absolute;
-		bottom:-10px;
-	}
-	div:before,
-	div:after{
-		@extend %psuedo-content;
-	}
-	div:before{
-		left:-20px;
-	}
-	div:after{
-		left:20px;
-	}
+}
 
-	div:before{
-		@include animation(flicker 1s 0s infinite);
+.dot{
+   @include position(absolute, 50% -100px auto auto);
+   @include transform(translateY(-50%));
+   @include size(12px);
+   @include border-radius(50%);
+   background-color:#fff;
+   @include animation(dots 0.5s 0.1s infinite linear);
+}
+
+@include keyframes(dots){
+   0%{
+      @include opacity(1);
+      right:-90px;
+   }
+   97%{
+      @include opacity(1);
+      right:20px;
+   }
+   98%{
+      @include opacity(0);
+   }
+   99%{
+      @include opacity(1);
+      right:-90px;
+   }
+}
+
+.pacman{
+   position:relative;
+   left:20px;
+   @include size(80px);
+   @include transform(scale(0.5));
+}
+
+.body {
+   @include size(80px);
+   border-radius: 50%/50%;
+   background: #fff;
+}
+.mouth {
+	@include position(absolute, 50% 0px auto auto);
+	@include transform(translateY(-50%));
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-color: transparent $primary transparent transparent;
+	@include animation(omnomnom 0.5s infinite linear);
+}
+@include keyframes(omnomnom){
+	0%, 100% {
+	   border-width: 24px 36px 24px 0;
+	   margin-left:48px;
+	   margin-top:-4px;
 	}
-	div{
-		@include animation(flicker 1s 1s infinite);
+	25% {
+	   border-width: 12px 36px 12px 0;
+	   margin-left:64px;
+	   margin-top:4px;
 	}
-	div:after{
-		@include animation(flicker 1s 2s infinite);
+	50% {
+	   border-width: 1px 9px 1px 0;
+	   margin-left:76px;
+	   margin-top:4px;
+	}
+	75% {
+	   border-width: 12px 36px 12px 0;
+	   margin-left:64px;
+	   margin-top:4px;
 	}
 }
 
