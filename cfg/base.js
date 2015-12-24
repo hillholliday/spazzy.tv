@@ -4,6 +4,7 @@ var classNames = require('classnames');
 var port = 8000;
 var srcPath = path.join(__dirname, '/../src');
 var publicPath = '/assets/';
+var Promise = require('es6-promise').Promise;
 
 module.exports = {
   port: port,
