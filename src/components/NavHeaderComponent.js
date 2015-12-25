@@ -6,7 +6,7 @@ require('styles//NavHeader.scss');
 
 class NavHeaderComponent extends React.Component {
   openAboutModal(){
-  	alert('working');
+  	$('body').toggleClass('modal-open');
   }
   render() {
     return (

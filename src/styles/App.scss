@@ -10,11 +10,44 @@ body {
   }
 }
 
-.index .notice {
-  margin: 20px auto;
-  padding: 15px 0;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 1px 0;
-  background: #666;
+.not-available{
+  display:none;
+  @include position(absolute, 0px 0px 0px 0px);
+  background-color:#fff;
+  z-index:-1;
+  div{
+    @extend %absolute-middle;
+    max-width:320px;
+  }
+  svg{
+    display:block;
+    margin:0 auto 15px;
+    @include size(200px 60px);
+    use{
+      fill:$primary;
+    }
+  }
+  p{
+    text-align:center;
+    padding:0 5px;
+    font-size:14px;
+    font-family:$georgia;
+    line-height:1.4;
+    color:lighten($dark,40%);
+    margin-bottom:1em;
+  }
+}
+
+.touchevents{
+  .not-available{
+    display:block;
+    z-index:9999;
+  }
+}
+
+@media all and(max-width:960px){
+  .not-available{
+    display:block;
+    z-index:9999;
+  }
 }

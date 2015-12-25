@@ -93,8 +93,10 @@ class TwitchVideoComponent extends React.Component {
   	this.setState({
 		count: this.state.count + 1
 	});
-	$('button.follow').show();
-	$('button.unfollow').hide();
+	if(this.state.loggedIn){
+		$('button.follow').show();
+		$('button.unfollow').hide();
+	}
   }
   openShare(){
   	$('li.share-box').toggleClass('open');
@@ -113,6 +115,9 @@ class TwitchVideoComponent extends React.Component {
   	var url = 'https://twitter.com/intent/tweet?status=I found '+channelName+'(http://twitch.com/'+channelName+') on Roulette.tv! Find more streamers here: http://roulette.tv';
   	this.openShareBox(url,400,600);
   }
+  closeModal(){
+  	$('body').toggleClass('modal-open');
+  }
   componentWillMount(){
   	this.loadStreams();
   }
@@ -129,7 +134,7 @@ class TwitchVideoComponent extends React.Component {
 				   <div className="mouth"></div>
 				   <div className="dot"></div>
 				</div>
-				<p>Now loading</p>
+				<p>now loading</p>
 			</div>
 		)
 	}
@@ -139,7 +144,7 @@ class TwitchVideoComponent extends React.Component {
 		var playing = "";
 	    
 	    if(current.game !== null){
-	    	playing = "playing "+current.game;
+	    	playing = 'playing ' + current.game;
 	    }
 
 	    var stream = "http://twitch.tv/"+current.channel.name+"/embed";
@@ -155,9 +160,24 @@ class TwitchVideoComponent extends React.Component {
 			'authenticated': this.state.loggedIn
 		});
 
+		var aboutClass = classNames({
+			'about':true,
+			'modal':true
+		});
+
 	    return (
 	      <div className={mainClass}>
 	      		<NavHeader/>
+	      		<div className={aboutClass}>
+	      			<div>
+	      				<button className="close" onClick={this.closeModal.bind(this)}>Close Modal</button>
+						<h2>About this app</h2>
+						<p>This app was built using <a href="https://github.com/justintv/twitch-js-sdk">Twitch’s own developer API</a> to help viewers find new and interesting streams through rng (random number generator).</p>
+						<p>Connect your own Twitch account through Spazzy to chat with other gamers, and follow them from right within the app.</p>
+						<p>The app was built using <a href="https://facebook.github.io/react/">React</a> and <a href="https://webpack.github.io/">Webpack</a>. You can check out the <a href="https://github.com/hillholliday/spazzy.tv">sourcecode for the project</a> as well. If you discover any bugs, let us know by sending us a <a href="mailto:rob@roberskine.com?subject=Spazzy.tv Feedback">note</a> or <a href="https://github.com/hillholliday/spazzy.tv/issues/new">submitting</a> an issue on github.</p>
+						<p>If you got any enjoyment out of this app, feel free to let the developer know! (<a href="http://twitter.com/erskinerob">twitter</a>) (<a href="http://twitch.tv/swy13">twitch</a>)</p>
+					</div>
+				</div>
 				<div className="video">
 					<header className="stream-details">
 						<div className="header-group">
