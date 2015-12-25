@@ -182,7 +182,7 @@ class TwitchVideoComponent extends React.Component {
 						<p>This app was built using <a href="https://github.com/justintv/twitch-js-sdk">Twitch’s own developer API</a> to help viewers find new and interesting streams through rng (random number generator).</p>
 						<p>Connect your own Twitch account through Spazzy to chat with other gamers, and follow them from right within the app.</p>
 						<p>The app was built using <a href="https://facebook.github.io/react/">React</a> and <a href="https://webpack.github.io/">Webpack</a>. You can check out the <a href="https://github.com/hillholliday/spazzy.tv">sourcecode for the project</a> as well. If you discover any bugs, let us know by sending us a <a href="mailto:rob@roberskine.com?subject=Spazzy.tv Feedback">note</a> or <a href="https://github.com/hillholliday/spazzy.tv/issues/new">submitting</a> an issue on github.</p>
-						<p>If you got any enjoyment out of this app, feel free to let the developer know! (<a href="http://twitter.com/erskinerob">twitter</a>) (<a href="http://twitch.tv/swy13">twitch</a>)</p>
+						<p>If you enjoyed this app, feel free to let us know! (<a href="http://twitter.com/erskinerob">twitter</a>) (<a href="http://twitch.tv/swy13">twitch</a>)</p>
 					</div>
 				</div>
 				<div className="video">
