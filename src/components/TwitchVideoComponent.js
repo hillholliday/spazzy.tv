@@ -18,7 +18,7 @@ else if(config.default.appEnv == "staging"){
 	clientId = 'qr2qjns8zpj7foayffst9z0wspnbymm';
 }
 else if(config.default.appEnv == "dist"){
-	clientId = 'qr2qjns8zpj7foayffst9z0wspnbymm';
+	clientId = '11217osnsfltxmzgbyvpjr7q57vz8r7';
 }
 
 class TwitchVideoComponent extends React.Component {
