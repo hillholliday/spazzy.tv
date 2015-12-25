@@ -3,6 +3,8 @@ require('styles/App.scss');
 require("!script!../scripts/jquery-2.1.4.js");
 require("!script!../scripts/twitch.js");
 require("!script!../scripts/modernizr.js");
+require("!script!../scripts/analytics.js");
+
 
 import React from 'react';
 

@@ -7,6 +7,7 @@ require('styles//NavHeader.scss');
 class NavHeaderComponent extends React.Component {
   openAboutModal(){
   	$('body').toggleClass('modal-open');
+  	ga('send', 'event', 'about', 'open');
   }
   render() {
     return (

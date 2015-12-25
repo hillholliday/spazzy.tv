@@ -34,8 +34,6 @@ class TwitchVideoComponent extends React.Component {
   }
   loadStreams(){
   	var that = this;
-  	
-  	console.log("environment: " + config.default.appEnv + " | client ID: " + clientId);
 
   	Twitch.init({clientId: clientId}, function(error, status) {
 		Twitch.api({method: 'beta/streams/random?limit=10&language=en', verb: 'GET'},function(error,list){
@@ -61,6 +59,7 @@ class TwitchVideoComponent extends React.Component {
 	return;
   }
   signIn(){
+  	ga('send', 'event', 'user', 'signed in');
   	Twitch.login({
       scope: ['user_read', 'channel_read','user_follows_edit']
     });
@@ -69,7 +68,9 @@ class TwitchVideoComponent extends React.Component {
   	var user = this.state.currentUser;
   	var target = this.state.streamList.streams[this.state.count].channel.name; 
   	var token = this.state.accessToken;
-  	console.log('users/'+user+'/follows/channels/'+target+'?access_token='+token);
+  	
+  	ga('send', 'event', 'channel', 'like', user + ' / ' + target);
+
   	Twitch.api({method:'users/'+user+'/follows/channels/'+target, verb: 'PUT'}, function(error, status){
   		if(error === null){
   			$('button.follow').hide();
@@ -81,7 +82,9 @@ class TwitchVideoComponent extends React.Component {
   	var user = this.state.currentUser;
   	var target = this.state.streamList.streams[this.state.count].channel.name; 
   	var token = this.state.accessToken;
-  	console.log('users/'+user+'/follows/channels/'+target+'?access_token='+token);
+  	
+  	ga('send', 'event', 'channel', 'dislike', user + ' / ' + target);
+
   	Twitch.api({method:'users/'+user+'/follows/channels/'+target, verb: 'DELETE'}, function(error, status){
   		if(error === null){
   			$('button.follow').show();
@@ -100,6 +103,7 @@ class TwitchVideoComponent extends React.Component {
   }
   openShare(){
   	$('li.share-box').toggleClass('open');
+  	ga('send', 'event', 'share', 'open');
   }
   openShareBox(url, height, width){
   	newwindow=window.open(url,'name','height='+height+',width='+width);
@@ -108,15 +112,18 @@ class TwitchVideoComponent extends React.Component {
   }
   openFacebook(){
   	var channelName = this.state.streamList.streams[this.state.count].channel.name
+  	ga('send', 'event', 'share', 'facebook', channelName);
   	this.openShareBox('https://www.facebook.com/sharer/sharer.php?u=http://twitch.tv/'+channelName,400,600);
   }
   openTwitter(){
   	var channelName = this.state.streamList.streams[this.state.count].channel.name
+  	ga('send', 'event', 'share', 'twitter', channelName);
   	var url = 'https://twitter.com/intent/tweet?status=I found '+channelName+'(http://twitch.com/'+channelName+') on Roulette.tv! Find more streamers here: http://roulette.tv';
   	this.openShareBox(url,400,600);
   }
   closeModal(){
   	$('body').toggleClass('modal-open');
+  	ga('send', 'event', 'about', 'close');
   }
   componentWillMount(){
   	this.loadStreams();
